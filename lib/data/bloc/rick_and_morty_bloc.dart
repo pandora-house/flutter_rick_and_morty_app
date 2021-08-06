@@ -40,6 +40,8 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield* _mapLocationFetchFirstPage();
     } else if (event is LocationsFetchNewPage) {
       yield* _mapLocationsFetchNewPage();
+    } else if (event is LocationFetchByUrl) {
+      yield* _mapLocationFetchByUrl(event);
     }
   }
 
@@ -114,6 +116,26 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield LocationsFetched(list: locations);
     } on Exception catch (e) {
       yield LocationsNewPageError();
+    }
+  }
+
+  Stream<RickAndMortyState> _mapLocationFetchById(LocationFetchById event) async* {
+    yield LocationIsLoading();
+    try {
+      final location = await repository.fetchLocationById(event.id);
+      yield LocationFetched(item: location);
+    } on Exception catch (e) {
+      yield LocationError();
+    }
+  }
+
+  Stream<RickAndMortyState> _mapLocationFetchByUrl(LocationFetchByUrl event) async* {
+    yield LocationIsLoading();
+    try {
+      final location = await repository.fetchLocationByUrl(event.url);
+      yield LocationFetched(item: location);
+    } on Exception catch (e) {
+      yield LocationError();
     }
   }
 }

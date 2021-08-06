@@ -33,12 +33,11 @@ class MyApp extends StatelessWidget {
               },
             );
           } else if (settings.name == LocationDetailPage.routeName) {
-            final args = settings.arguments as Map<String, dynamic>;
+            final args = settings.arguments as String;
             return MaterialPageRoute(
               builder: (context) {
                 return LocationDetailPage(
-                  id: args['id'],
-                  name: args['name'],
+                  name: args,
                 );
               },
             );

@@ -4,7 +4,7 @@ class RickAndMortyApi {
   String url = 'https://rickandmortyapi.com/api/';
 
   Future<String> fetchCharacters(int page) async {
-    final response = await http.get(Uri.parse('$url/character/?page=$page'));
+    final response = await http.get(Uri.parse('${url}character/?page=$page'));
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -13,7 +13,7 @@ class RickAndMortyApi {
   }
 
   Future<String> fetchPersonage(int id) async {
-    final response = await http.get(Uri.parse('$url/character/$id'));
+    final response = await http.get(Uri.parse('${url}character/$id'));
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -45,6 +45,15 @@ class RickAndMortyApi {
       return response.body;
     } else {
       throw Exception('Failed to load');
+    }
+  }
+
+  Future<String> fetchLocation(int id) async {
+    final response = await http.get(Uri.parse('${url}location/$id'));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load location');
     }
   }
 }

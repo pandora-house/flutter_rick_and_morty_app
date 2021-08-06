@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/character.dart';
+import 'location_detail.dart';
 
 class PersonageDetail extends StatelessWidget {
   PersonageDetail({Key? key, required this.id, required this.name})
@@ -35,8 +36,18 @@ class PersonageDetail extends StatelessWidget {
                     height: 16,
                   ),
                   _PersonageOption(
-                    onTap: () {},
-                    title: 'Locations',
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(LocationDetailPage.routeName,
+                              arguments: item.location!.name)
+                          .then((value) => context
+                              .read<RickAndMortyBloc>()
+                              .add(PersonageFetch(id: id)));
+                      context
+                          .read<RickAndMortyBloc>()
+                          .add(LocationFetchByUrl(url: item.location!.url!));
+                    },
+                    title: 'Location',
                   ),
                   _PersonageOption(
                     onTap: () {},
