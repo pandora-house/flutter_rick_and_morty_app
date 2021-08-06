@@ -12,7 +12,7 @@ class EpisodesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<RickAndMortyBloc>().add(EpisodeFetchFirstPage());
+    context.read<RickAndMortyBloc>().add(EpisodesFetchFirstPage());
     return Scaffold(
         appBar: AppBar(
           title: Text('Episodes'),
@@ -41,7 +41,7 @@ class EpisodesPage extends StatelessWidget {
                           _scrollController.position.maxScrollExtent) {
                         context
                             .read<RickAndMortyBloc>()
-                            .add(EpisodeFetchNewPage());
+                            .add(EpisodesFetchNewPage());
                       }
                     }),
                   itemCount: _list.length,
