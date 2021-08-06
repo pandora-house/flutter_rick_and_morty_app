@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rick_and_morty_app/data/models/character.dart';
-import 'package:flutter_rick_and_morty_app/data/models/locations.dart';
-import '../widgets/resident_item.dart';
 
 import '../data/bloc/rick_and_morty_bloc.dart';
+import '../data/models/character.dart';
+import '../data/models/locations.dart';
+import '../widgets/resident_item.dart';
 
 class LocationDetailPage extends StatelessWidget {
   LocationDetailPage({Key? key, required this.name}) : super(key: key);
