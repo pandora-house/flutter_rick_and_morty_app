@@ -11,6 +11,7 @@ class CharactersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<RickAndMortyBloc>().add(CharactersFetchFirstPage());
     return Scaffold(
       appBar: AppBar(
         title: Text('Characters'),

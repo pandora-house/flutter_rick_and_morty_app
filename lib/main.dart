@@ -15,8 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RickAndMortyBloc(repository: Repository())
-        ..add(CharactersFetchFirstPage()),
+      create: (context) => RickAndMortyBloc(repository: Repository()),
       child: MaterialApp(
         title: 'Rick and Morty',
         theme: appTheme,
