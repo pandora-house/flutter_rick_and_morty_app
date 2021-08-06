@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/character.dart';
+import '../pages/personage_detail.dart';
 
 class ResidentItemWidget extends StatelessWidget {
   ResidentItemWidget({
@@ -16,9 +19,12 @@ class ResidentItemWidget extends StatelessWidget {
         Ink(
           color: Colors.white,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(PersonageDetail.routeName,
+                  arguments: {'id': item.id, 'name': item.name});
+            },
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+              padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
               child: Row(
                 children: [
                   Expanded(child: Text(item.name!)),
