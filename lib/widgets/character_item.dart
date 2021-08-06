@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../data/models/character.dart';
 import '../pages/personage_detail.dart';
 
-class CharacterItem extends StatelessWidget {
-  CharacterItem({Key? key, required this.item}) : super(key: key);
+class CharacterItemWidget extends StatelessWidget {
+  CharacterItemWidget({Key? key, required this.item}) : super(key: key);
   final Character item;
 
   @override
