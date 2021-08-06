@@ -45,7 +45,7 @@ class Repository extends RickAndMortyRepository {
 
   @override
   Future<Episode> fetchEpisode(String url) async {
-    var result = await RickAndMortyApi().fetchEpisode(url);
+    var result = await RickAndMortyApi().fetchData(url);
     return Episode.fromJson(jsonDecode(result));
   }
 
@@ -60,7 +60,7 @@ class Repository extends RickAndMortyRepository {
 
   @override
   Future<Locations> fetchLocation(String url) async {
-    var result = await RickAndMortyApi().fetchLocation(url);
+    var result = await RickAndMortyApi().fetchData(url);
     return Locations.fromJson(jsonDecode(result));
   }
 }
