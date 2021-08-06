@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import '../data/models/locations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/bloc/rick_and_morty_bloc.dart';
+import '../data/models/locations.dart';
+import '../pages/location_detail.dart';
 
 class LocationItemWidget extends StatelessWidget {
   LocationItemWidget({
@@ -36,7 +39,13 @@ class LocationItemWidget extends StatelessWidget {
               Icons.arrow_forward_ios,
               color: Colors.grey,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(LocationDetailPage.routeName,
+                  arguments: item.name);
+              context
+                  .read<RickAndMortyBloc>()
+                  .add(LocationFetchById(id: item.id!));
+            },
             contentPadding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
           ),
         ),
