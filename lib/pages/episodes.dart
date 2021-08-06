@@ -13,7 +13,6 @@ class EpisodesPage extends StatefulWidget {
 
 class _EpisodesPageState extends State<EpisodesPage> {
   final List<Episode> _list = [];
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {

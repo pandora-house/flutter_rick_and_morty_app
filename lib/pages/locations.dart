@@ -13,7 +13,6 @@ class LocationsPage extends StatefulWidget {
 
 class _LocationsPageState extends State<LocationsPage> {
   final List<Locations> _list = [];
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
