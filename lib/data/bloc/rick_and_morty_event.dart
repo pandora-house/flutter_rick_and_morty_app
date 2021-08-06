@@ -24,3 +24,7 @@ class PersonageFetch extends RickAndMortyEvent {
 class EpisodesFetchFirstPage extends RickAndMortyEvent {}
 
 class EpisodesFetchNewPage extends RickAndMortyEvent {}
+
+class LocationsFetchFirstPage extends RickAndMortyEvent {}
+
+class LocationsFetchNewPage extends RickAndMortyEvent {}

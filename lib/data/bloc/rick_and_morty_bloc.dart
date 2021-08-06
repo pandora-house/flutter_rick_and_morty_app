@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_rick_and_morty_app/data/models/locations.dart';
 import 'package:meta/meta.dart';
 
 import '../models/character.dart';
@@ -9,6 +10,7 @@ import '../models/episode.dart';
 import '../repository.dart';
 
 part 'rick_and_morty_event.dart';
+
 part 'rick_and_morty_state.dart';
 
 class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
@@ -18,6 +20,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
 
   int pageCharactersCounter = 1;
   int pageEpisodesCounter = 1;
+  int pageLocationsCounter = 1;
 
   @override
   Stream<RickAndMortyState> mapEventToState(
@@ -33,6 +36,10 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield* _mapEpisodeFetchFirstPage();
     } else if (event is EpisodesFetchNewPage) {
       yield* _mapEpisodesFetchNewPage();
+    } else if (event is LocationsFetchFirstPage) {
+      yield* _mapLocationFetchFirstPage();
+    } else if (event is LocationsFetchNewPage) {
+      yield* _mapLocationsFetchNewPage();
     }
   }
 
@@ -85,6 +92,28 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield EpisodesFetched(list: episodes);
     } on Exception catch (e) {
       yield EpisodesNewPageError();
+    }
+  }
+
+  Stream<RickAndMortyState> _mapLocationFetchFirstPage() async* {
+    yield LocationsIsLoading();
+    try {
+      final locations =
+          await repository.fetchLocationsPage(pageLocationsCounter);
+      yield LocationsFetched(list: locations);
+    } on Exception catch (e) {
+      yield LocationsError();
+    }
+  }
+
+  Stream<RickAndMortyState> _mapLocationsFetchNewPage() async* {
+    pageLocationsCounter += 1;
+    try {
+      final locations =
+          await repository.fetchLocationsPage(pageLocationsCounter);
+      yield LocationsFetched(list: locations);
+    } on Exception catch (e) {
+      yield LocationsNewPageError();
     }
   }
 }

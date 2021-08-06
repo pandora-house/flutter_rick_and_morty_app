@@ -38,4 +38,22 @@ class RickAndMortyApi {
       throw Exception('Failed to load episode');
     }
   }
+
+  Future<String> fetchLocationsPage(int page) async {
+    final response = await http.get(Uri.parse('${url}location?page=$page'));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load locations');
+    }
+  }
+
+  Future<String> fetchLocation(String url) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load location');
+    }
+  }
 }

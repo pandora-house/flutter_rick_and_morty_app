@@ -55,3 +55,19 @@ class EpisodesFetched extends RickAndMortyState {
 class EpisodesError extends RickAndMortyState {}
 
 class EpisodesNewPageError extends RickAndMortyState {}
+
+// page locations
+class LocationsIsLoading extends RickAndMortyState {}
+
+class LocationsFetched extends RickAndMortyState {
+  final List<Locations> list;
+
+  const LocationsFetched({required this.list});
+
+  @override
+  List<Object?> get props => [list];
+}
+
+class LocationsError extends RickAndMortyState {}
+
+class LocationsNewPageError extends RickAndMortyState {}
