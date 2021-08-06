@@ -26,7 +26,7 @@ class LocationItemWidget extends StatelessWidget {
                   maxLines: 1,
                 ),
                 new Text(
-                  item.dimension!,
+                  'Dimension: ${item.dimension}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -37,7 +37,7 @@ class LocationItemWidget extends StatelessWidget {
               color: Colors.grey,
             ),
             onTap: () {},
-            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+            contentPadding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
           ),
         ),
         Divider(
