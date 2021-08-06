@@ -21,6 +21,6 @@ class PersonageFetch extends RickAndMortyEvent {
   List<Object?> get props => [id];
 }
 
-class EpisodeFetchFirstPage extends RickAndMortyEvent {}
+class EpisodesFetchFirstPage extends RickAndMortyEvent {}
 
-class EpisodeFetchNewPage extends RickAndMortyEvent {}
+class EpisodesFetchNewPage extends RickAndMortyEvent {}
