@@ -39,7 +39,7 @@ class RickAndMortyApi {
     }
   }
 
-  Future<String> fetchData(String url) async {
+  Future<String> fetchDataByUrl(String url) async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return response.body;

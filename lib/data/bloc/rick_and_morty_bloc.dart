@@ -42,6 +42,8 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield* _mapLocationsFetchNewPage();
     } else if (event is LocationFetchByUrl) {
       yield* _mapLocationFetchByUrl(event);
+    } else if (event is LocationFetchById) {
+      yield* _mapLocationFetchById(event);
     }
   }
 
@@ -70,7 +72,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
   Stream<RickAndMortyState> _mapPersonageFetch(PersonageFetch event) async* {
     yield PersonageIsLoading();
     try {
-      final personage = await repository.fetchPersonage(event.id);
+      final personage = await repository.fetchPersonageById(event.id);
       yield PersonageFetched(personage: personage);
     } on Exception catch (e) {
       yield PersonageError();
@@ -119,23 +121,36 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     }
   }
 
-  Stream<RickAndMortyState> _mapLocationFetchById(LocationFetchById event) async* {
+  Stream<RickAndMortyState> _mapLocationFetchById(
+      LocationFetchById event) async* {
     yield LocationIsLoading();
     try {
       final location = await repository.fetchLocationById(event.id);
-      yield LocationFetched(item: location);
+      final residents = await _getResidents(location, repository);
+
+      yield LocationFetched(item: location, residents: residents);
     } on Exception catch (e) {
       yield LocationError();
     }
   }
 
-  Stream<RickAndMortyState> _mapLocationFetchByUrl(LocationFetchByUrl event) async* {
+  Stream<RickAndMortyState> _mapLocationFetchByUrl(
+      LocationFetchByUrl event) async* {
     yield LocationIsLoading();
     try {
       final location = await repository.fetchLocationByUrl(event.url);
-      yield LocationFetched(item: location);
+      final residents = await _getResidents(location, repository);
+
+      yield LocationFetched(item: location, residents: residents);
     } on Exception catch (e) {
       yield LocationError();
     }
   }
+}
+
+Future<List<Character>> _getResidents(
+    Locations location, Repository repository) async {
+  return await Future.wait([
+    for (var url in location.residents!) repository.fetchPersonageByUrl(url)
+  ]);
 }

@@ -72,16 +72,16 @@ class LocationsError extends RickAndMortyState {}
 
 class LocationsNewPageError extends RickAndMortyState {}
 
-// page location detai
+// page location detail
 class LocationIsLoading extends RickAndMortyState {}
 
 class LocationFetched extends RickAndMortyState {
   final Locations item;
-
-  const LocationFetched({required this.item});
+  final List<Character> residents;
+  const LocationFetched({required this.item, required this.residents});
 
   @override
-  List<Object?> get props => [item];
+  List<Object?> get props => [item, residents];
 }
 
 class LocationError extends RickAndMortyState {}

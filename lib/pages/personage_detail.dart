@@ -138,31 +138,34 @@ class _PersonageOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Ink(
-          color: Colors.white,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Expanded(child: Text(title)),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.grey,
-                  )
-                ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: [
+          Ink(
+            color: Colors.white,
+            child: InkWell(
+              onTap: onTap,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                child: Row(
+                  children: [
+                    Expanded(child: Text(title)),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Divider(
-          height: 0.7,
-          thickness: 0.7,
-        )
-      ],
+          Divider(
+            height: 0.7,
+            thickness: 0.7,
+          )
+        ],
+      ),
     );
   }
 }

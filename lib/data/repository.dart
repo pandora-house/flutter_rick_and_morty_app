@@ -8,7 +8,9 @@ import 'rick_and_morty_api.dart';
 abstract class RickAndMortyRepository {
   Future<List<Character>> fetchCharacters(int page);
 
-  Future<Character> fetchPersonage(int id);
+  Future<Character> fetchPersonageById(int id);
+
+  Future<Character> fetchPersonageByUrl(String url);
 
   Future<List<Episode>> fetchEpisodesPage(int page);
 
@@ -17,6 +19,7 @@ abstract class RickAndMortyRepository {
   Future<List<Locations>> fetchLocationsPage(int page);
 
   Future<Locations> fetchLocationById(int id);
+
   Future<Locations> fetchLocationByUrl(String url);
 }
 
@@ -31,8 +34,14 @@ class Repository extends RickAndMortyRepository {
   }
 
   @override
-  Future<Character> fetchPersonage(int id) async {
+  Future<Character> fetchPersonageById(int id) async {
     var result = await RickAndMortyApi().fetchPersonage(id);
+    return Character.fromJson(jsonDecode(result));
+  }
+
+  @override
+  Future<Character> fetchPersonageByUrl(String url) async {
+    var result = await RickAndMortyApi().fetchDataByUrl(url);
     return Character.fromJson(jsonDecode(result));
   }
 
@@ -67,7 +76,7 @@ class Repository extends RickAndMortyRepository {
 
   @override
   Future<Locations> fetchLocationByUrl(String url) async {
-    var result = await RickAndMortyApi().fetchData(url);
+    var result = await RickAndMortyApi().fetchDataByUrl(url);
     return Locations.fromJson(jsonDecode(result));
   }
 }
