@@ -6,17 +6,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/character.dart';
 
-class PersonageDetail extends StatelessWidget {
-  PersonageDetail({Key? key, required this.name}) : super(key: key);
+class PersonageDetail extends StatefulWidget {
+  PersonageDetail({Key? key, required this.id, required this.name})
+      : super(key: key);
   final String name;
+  final int id;
 
   static const routeName = '/character_detail';
+
+  @override
+  _PersonageDetailState createState() => _PersonageDetailState();
+}
+
+class _PersonageDetailState extends State<PersonageDetail> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<RickAndMortyBloc>().add(PersonageFetch(id: widget.id));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(widget.name),
       ),
       body: Center(
         child: BlocBuilder<RickAndMortyBloc, RickAndMortyState>(

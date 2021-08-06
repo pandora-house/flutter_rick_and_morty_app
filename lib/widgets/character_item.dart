@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../data/bloc/rick_and_morty_bloc.dart';
-import '../pages/personage_detail.dart';
 
 import '../data/models/character.dart';
+import '../pages/personage_detail.dart';
 
 class CharacterItem extends StatelessWidget {
   CharacterItem({Key? key, required this.item}) : super(key: key);
@@ -16,8 +13,7 @@ class CharacterItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(PersonageDetail.routeName, arguments: item.name);
-        context.read<RickAndMortyBloc>().add(PersonageFetch(id: item.id!));
+            .pushNamed(PersonageDetail.routeName, arguments: {'id' : item.id!, 'name': item.name});
       },
       child: Card(
         child: Row(

@@ -22,11 +22,12 @@ class MyApp extends StatelessWidget {
         theme: appTheme,
         onGenerateRoute: (settings) {
           if (settings.name == PersonageDetail.routeName) {
-            final args = settings.arguments as String;
+            final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) {
                 return PersonageDetail(
-                  name: args,
+                  id: args['id'],
+                  name: args['name'],
                 );
               },
             );
