@@ -6,7 +6,7 @@ import '../data/models/character.dart';
 import '../widgets/character_item.dart';
 
 class CharactersPage extends StatelessWidget {
-  final List<Character> _characters = [];
+  final List<Character> _list = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -31,7 +31,7 @@ class CharactersPage extends StatelessWidget {
                 return CircularProgressIndicator();
               } else if (state is CharactersFetched) {
                 var list = state.list;
-                _characters.addAll(list);
+                _list.addAll(list);
                 return ListView.builder(
                   controller: _scrollController
                     ..addListener(() {
@@ -42,17 +42,17 @@ class CharactersPage extends StatelessWidget {
                             .add(CharactersFetchNewPage());
                       }
                     }),
-                  itemCount: _characters.length,
+                  itemCount: _list.length,
                   itemBuilder: (context, int index) =>
-                      CharacterItem(item: _characters[index]),
+                      CharacterItem(item: _list[index]),
                 );
               }
-              return _characters.isEmpty
+              return _list.isEmpty
                   ? Text('smt went wrong')
                   : ListView.builder(
-                      itemCount: _characters.length,
+                      itemCount: _list.length,
                       itemBuilder: (context, int index) =>
-                          CharacterItem(item: _characters[index]),
+                          CharacterItem(item: _list[index]),
                     );
             },
           ),
