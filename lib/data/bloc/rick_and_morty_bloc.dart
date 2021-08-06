@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_rick_and_morty_app/data/models/episode.dart';
 import 'package:meta/meta.dart';
 
 import '../models/character.dart';
+import '../models/episode.dart';
 import '../repository.dart';
 
 part 'rick_and_morty_event.dart';
-
 part 'rick_and_morty_state.dart';
 
 class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
@@ -30,15 +29,18 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield* _mapCharactersFetchNewPage();
     } else if (event is PersonageFetch) {
       yield* _mapPersonageFetch(event);
-    } else if (event is EpisodeFetchFirstPage) {
+    } else if (event is EpisodesFetchFirstPage) {
       yield* _mapEpisodeFetchFirstPage();
+    } else if (event is EpisodesFetchNewPage) {
+      yield* _mapEpisodesFetchNewPage();
     }
   }
 
   Stream<RickAndMortyState> _mapCharactersFetchFirstPage() async* {
     yield CharactersIsLoading();
     try {
-      final characters = await repository.fetchCharacters(pageCharactersCounter);
+      final characters =
+          await repository.fetchCharacters(pageCharactersCounter);
       yield CharactersFetched(list: characters);
     } on Exception catch (e) {
       yield CharactersError();
@@ -48,7 +50,8 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
   Stream<RickAndMortyState> _mapCharactersFetchNewPage() async* {
     pageCharactersCounter += 1;
     try {
-      final characters = await repository.fetchCharacters(pageCharactersCounter);
+      final characters =
+          await repository.fetchCharacters(pageCharactersCounter);
       yield CharactersFetched(list: characters);
     } on Exception catch (e) {
       yield CharactersNewPageError();
@@ -72,6 +75,16 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield EpisodesFetched(list: episodes);
     } on Exception catch (e) {
       yield EpisodesError();
+    }
+  }
+
+  Stream<RickAndMortyState> _mapEpisodesFetchNewPage() async* {
+    pageEpisodesCounter += 1;
+    try {
+      final episodes = await repository.fetchEpisodesPage(pageEpisodesCounter);
+      yield EpisodesFetched(list: episodes);
+    } on Exception catch (e) {
+      yield EpisodesNewPageError();
     }
   }
 }
