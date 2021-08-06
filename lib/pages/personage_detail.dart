@@ -36,11 +36,11 @@ class PersonageDetail extends StatelessWidget {
                   ),
                   _PersonageOption(
                     onTap: () {},
-                    title: 'Episodes',
+                    title: 'Locations',
                   ),
                   _PersonageOption(
                     onTap: () {},
-                    title: 'Locations',
+                    title: 'Episodes',
                   ),
                 ],
               );
