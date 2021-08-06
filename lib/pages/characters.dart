@@ -44,7 +44,7 @@ class CharactersPage extends StatelessWidget {
                     }),
                   itemCount: _list.length,
                   itemBuilder: (context, int index) =>
-                      CharacterItem(item: _list[index]),
+                      CharacterItemWidget(item: _list[index]),
                 );
               }
               return _list.isEmpty
@@ -52,7 +52,7 @@ class CharactersPage extends StatelessWidget {
                   : ListView.builder(
                       itemCount: _list.length,
                       itemBuilder: (context, int index) =>
-                          CharacterItem(item: _list[index]),
+                          CharacterItemWidget(item: _list[index]),
                     );
             },
           ),
