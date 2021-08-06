@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/character.dart';
 import '../pages/personage_detail.dart';
 
