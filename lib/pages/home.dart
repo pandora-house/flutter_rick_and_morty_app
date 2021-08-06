@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rick_and_morty_app/data/nav_bar_notifiers.dart';
+
+import '../data/nav_bar_notifiers.dart';
 import 'characters.dart';
 import 'episodes.dart';
 import 'locations.dart';
