@@ -44,31 +44,36 @@ class _LocationsPageState extends State<LocationsPage> {
               } else if (state is LocationsFetched) {
                 var list = state.list;
                 _list.addAll(list);
-                return ListView.builder(
-                  controller: _scrollController
-                    ..addListener(() {
-                      if (_scrollController.offset ==
-                          _scrollController.position.maxScrollExtent) {
-                        context
-                            .read<RickAndMortyBloc>()
-                            .add(LocationsFetchNewPage());
-                      }
-                    }),
-                  itemCount: _list.length,
-                  itemBuilder: (context, int index) =>
-                      LocationItemWidget(item: _list[index]),
-                );
+                return _LocationsView(list: _list);
               }
               return _list.isEmpty
                   ? Text('smt went wrong')
-                  : ListView.builder(
-                      itemCount: _list.length,
-                      itemBuilder: (context, int index) => LocationItemWidget(
-                        item: _list[index],
-                      ),
-                    );
+                  : _LocationsView(list: _list);
             },
           ),
         )));
+  }
+}
+
+class _LocationsView extends StatelessWidget {
+  _LocationsView({Key? key, required this.list}) : super(key: key);
+  final List<Locations> list;
+
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: _scrollController
+        ..addListener(() {
+          if (_scrollController.offset ==
+              _scrollController.position.maxScrollExtent) {
+            context.read<RickAndMortyBloc>().add(LocationsFetchNewPage());
+          }
+        }),
+      itemCount: list.length,
+      itemBuilder: (context, int index) =>
+          LocationItemWidget(item: list[index]),
+    );
   }
 }

@@ -44,30 +44,35 @@ class _EpisodesPageState extends State<EpisodesPage> {
               } else if (state is EpisodesFetched) {
                 var list = state.list;
                 _list.addAll(list);
-                return ListView.builder(
-                  controller: _scrollController
-                    ..addListener(() {
-                      if (_scrollController.offset ==
-                          _scrollController.position.maxScrollExtent) {
-                        context
-                            .read<RickAndMortyBloc>()
-                            .add(EpisodesFetchNewPage());
-                      }
-                    }),
-                  itemCount: _list.length,
-                  itemBuilder: (context, int index) =>
-                      EpisodeItemWidget(item: _list[index]),
-                );
+                return _EpisodesView(list: _list);
               }
               return _list.isEmpty
                   ? Text('smt went wrong')
-                  : ListView.builder(
-                      itemCount: _list.length,
-                      itemBuilder: (context, int index) =>
-                          EpisodeItemWidget(item: _list[index]),
-                    );
+                  : _EpisodesView(list: _list);
             },
           ),
         )));
+  }
+}
+
+class _EpisodesView extends StatelessWidget {
+  _EpisodesView({Key? key, required this.list}) : super(key: key);
+  final List<Episode> list;
+
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: _scrollController
+        ..addListener(() {
+          if (_scrollController.offset ==
+              _scrollController.position.maxScrollExtent) {
+            context.read<RickAndMortyBloc>().add(EpisodesFetchNewPage());
+          }
+        }),
+      itemCount: list.length,
+      itemBuilder: (context, int index) => EpisodeItemWidget(item: list[index]),
+    );
   }
 }

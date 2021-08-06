@@ -12,7 +12,6 @@ class CharactersPage extends StatefulWidget {
 
 class _CharactersPageState extends State<CharactersPage> {
   final List<Character> _list = [];
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -43,32 +42,38 @@ class _CharactersPageState extends State<CharactersPage> {
               } else if (state is CharactersFetched) {
                 var list = state.list;
                 _list.addAll(list);
-                return ListView.builder(
-                  controller: _scrollController
-                    ..addListener(() {
-                      if (_scrollController.offset ==
-                          _scrollController.position.maxScrollExtent) {
-                        context
-                            .read<RickAndMortyBloc>()
-                            .add(CharactersFetchNewPage());
-                      }
-                    }),
-                  itemCount: _list.length,
-                  itemBuilder: (context, int index) =>
-                      CharacterItemWidget(item: _list[index]),
-                );
+                return _CharactersView(list: _list);
               }
               return _list.isEmpty
                   ? Text('smt went wrong')
-                  : ListView.builder(
-                      itemCount: _list.length,
-                      itemBuilder: (context, int index) =>
-                          CharacterItemWidget(item: _list[index]),
-                    );
+                  : _CharactersView(list: _list);
             },
           ),
         ),
       ),
+    );
+  }
+}
+
+class _CharactersView extends StatelessWidget {
+  _CharactersView({Key? key, required this.list}) : super(key: key);
+  final List<Character> list;
+
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: _scrollController
+        ..addListener(() {
+          if (_scrollController.offset ==
+              _scrollController.position.maxScrollExtent) {
+            context.read<RickAndMortyBloc>().add(CharactersFetchNewPage());
+          }
+        }),
+      itemCount: list.length,
+      itemBuilder: (context, int index) =>
+          CharacterItemWidget(item: list[index]),
     );
   }
 }
