@@ -6,13 +6,23 @@ import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/episode.dart';
 import '../widgets/episode_item.dart';
 
-class EpisodesPage extends StatelessWidget {
+class EpisodesPage extends StatefulWidget {
+  @override
+  _EpisodesPageState createState() => _EpisodesPageState();
+}
+
+class _EpisodesPageState extends State<EpisodesPage> {
   final List<Episode> _list = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     context.read<RickAndMortyBloc>().add(EpisodesFetchFirstPage());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Episodes'),
