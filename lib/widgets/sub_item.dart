@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../data/models/character.dart';
-import '../pages/personage_detail.dart';
 
-class ResidentItemWidget extends StatelessWidget {
-  ResidentItemWidget({
+class SubItemWidget extends StatelessWidget {
+  SubItemWidget({
     Key? key,
-    required this.item,
+    required this.name,
+    required this.onTap
   }) : super(key: key);
-  final Character item;
+  final String name;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +18,12 @@ class ResidentItemWidget extends StatelessWidget {
         Ink(
           color: Colors.white,
           child: InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(PersonageDetail.routeName,
-                  arguments: {'id': item.id, 'name': item.name});
-            },
+            onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
               child: Row(
                 children: [
-                  Expanded(child: Text(item.name!)),
+                  Expanded(child: Text(name)),
                   Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,

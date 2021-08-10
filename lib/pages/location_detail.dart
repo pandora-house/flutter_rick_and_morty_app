@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/character.dart';
 import '../data/models/locations.dart';
-import '../widgets/resident_item.dart';
+import '../widgets/sub_item.dart';
+import 'personage_detail.dart';
 
 class LocationDetailPage extends StatelessWidget {
   LocationDetailPage({Key? key, required this.name}) : super(key: key);
@@ -81,8 +82,13 @@ class _LocationsView extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: list.length,
-                itemBuilder: (context, int index) =>
-                    ResidentItemWidget(item: list[index]),
+                itemBuilder: (context, int index) => SubItemWidget(
+                  name: list[index].name!,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(PersonageDetail.routeName,
+                        arguments: {'id': item.id, 'name': item.name});
+                  },
+                ),
               ),
             ),
           ],
