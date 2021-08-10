@@ -42,12 +42,11 @@ class MyApp extends StatelessWidget {
               },
             );
           } else if (settings.name == EpisodeDetailPage.routeName) {
-            final args = settings.arguments as Map<String, dynamic>;
+            final args = settings.arguments as String;
             return MaterialPageRoute(
               builder: (context) {
                 return EpisodeDetailPage(
-                  id: args['id'],
-                  name: args['name'],
+                  name: args,
                 );
               },
             );

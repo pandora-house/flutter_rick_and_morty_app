@@ -25,6 +25,24 @@ class EpisodesFetchFirstPage extends RickAndMortyEvent {}
 
 class EpisodesFetchNewPage extends RickAndMortyEvent {}
 
+class EpisodeFetchById extends RickAndMortyEvent {
+  final int id;
+
+  const EpisodeFetchById({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}
+
+class EpisodeFetchByUrl extends RickAndMortyEvent {
+  final String url;
+
+  const EpisodeFetchByUrl({required this.url});
+
+  @override
+  List<Object?> get props => [url];
+}
+
 class LocationsFetchFirstPage extends RickAndMortyEvent {}
 
 class LocationsFetchNewPage extends RickAndMortyEvent {}

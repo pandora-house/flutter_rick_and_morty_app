@@ -14,7 +14,9 @@ abstract class RickAndMortyRepository {
 
   Future<List<Episode>> fetchEpisodesPage(int page);
 
-  // Future<Episode> fetchEpisode(String url);
+  Future<Episode> fetchEpisodeById(int id);
+
+  Future<Episode> fetchEpisodeByUrl(String url);
 
   Future<List<Locations>> fetchLocationsPage(int page);
 
@@ -53,11 +55,17 @@ class Repository extends RickAndMortyRepository {
     return List.from(list);
   }
 
-  // @override
-  // Future<Episode> fetchEpisode(String url) async {
-  //   var result = await RickAndMortyApi().fetchData(url);
-  //   return Episode.fromJson(jsonDecode(result));
-  // }
+  @override
+  Future<Episode> fetchEpisodeById(int id) async {
+    var result = await RickAndMortyApi().fetchEpisode(id);
+    return Episode.fromJson(jsonDecode(result));
+  }
+
+  @override
+  Future<Episode> fetchEpisodeByUrl(String url) async {
+    var result = await RickAndMortyApi().fetchDataByUrl(url);
+    return Episode.fromJson(jsonDecode(result));
+  }
 
   @override
   Future<List<Locations>> fetchLocationsPage(int page) async {

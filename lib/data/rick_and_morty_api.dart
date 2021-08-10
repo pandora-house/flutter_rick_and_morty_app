@@ -48,6 +48,15 @@ class RickAndMortyApi {
     }
   }
 
+  Future<String> fetchEpisode(int id) async {
+    final response = await http.get(Uri.parse('${url}episode/$id'));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load episode');
+    }
+  }
+
   Future<String> fetchLocation(int id) async {
     final response = await http.get(Uri.parse('${url}location/$id'));
     if (response.statusCode == 200) {

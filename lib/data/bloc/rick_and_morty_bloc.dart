@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_rick_and_morty_app/data/models/locations.dart';
 import 'package:meta/meta.dart';
 
 import '../models/character.dart';
 import '../models/episode.dart';
+import '../models/locations.dart';
 import '../repository.dart';
 
 part 'rick_and_morty_event.dart';
@@ -40,6 +40,10 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield* _mapLocationFetchFirstPage();
     } else if (event is LocationsFetchNewPage) {
       yield* _mapLocationsFetchNewPage();
+    } else if (event is EpisodeFetchByUrl) {
+      yield* _mapEpisodeFetchByUrl(event);
+    } else if (event is EpisodeFetchById) {
+      yield* _mapEpisodeFetchById(event);
     } else if (event is LocationFetchByUrl) {
       yield* _mapLocationFetchByUrl(event);
     } else if (event is LocationFetchById) {
@@ -121,6 +125,32 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     }
   }
 
+  Stream<RickAndMortyState> _mapEpisodeFetchById(
+      EpisodeFetchById event) async* {
+    yield EpisodeIsLoading();
+    try {
+      final episode = await repository.fetchEpisodeById(event.id);
+      final characters = await _getCharacters(episode, repository);
+
+      yield EpisodeFetched(item: episode, characters: characters);
+    } on Exception catch (e) {
+      yield EpisodeError();
+    }
+  }
+
+  Stream<RickAndMortyState> _mapEpisodeFetchByUrl(
+      EpisodeFetchByUrl event) async* {
+    yield EpisodeIsLoading();
+    try {
+      final episode = await repository.fetchEpisodeByUrl(event.url);
+      final characters = await _getCharacters(episode, repository);
+
+      yield EpisodeFetched(item: episode, characters: characters);
+    } on Exception catch (e) {
+      yield EpisodeError();
+    }
+  }
+
   Stream<RickAndMortyState> _mapLocationFetchById(
       LocationFetchById event) async* {
     yield LocationIsLoading();
@@ -152,5 +182,12 @@ Future<List<Character>> _getResidents(
     Locations location, Repository repository) async {
   return await Future.wait([
     for (var url in location.residents!) repository.fetchPersonageByUrl(url)
+  ]);
+}
+
+Future<List<Character>> _getCharacters(
+    Episode episode, Repository repository) async {
+  return await Future.wait([
+    for (var url in episode.characters!) repository.fetchPersonageByUrl(url)
   ]);
 }

@@ -86,7 +86,7 @@ class _LocationsView extends StatelessWidget {
                   name: list[index].name!,
                   onTap: () {
                     Navigator.of(context).pushNamed(PersonageDetail.routeName,
-                        arguments: {'id': item.id, 'name': item.name});
+                        arguments: {'id': list[index].id, 'name': list[index].name});
                   },
                 ),
               ),
