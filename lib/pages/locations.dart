@@ -23,9 +23,6 @@ class _LocationsPageState extends State<LocationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Locations'),
-        ),
         body: Scrollbar(
             child: Center(
           child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(

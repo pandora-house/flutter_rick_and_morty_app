@@ -23,9 +23,6 @@ class _EpisodesPageState extends State<EpisodesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Episodes'),
-        ),
         body: Scrollbar(
             child: Center(
           child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(

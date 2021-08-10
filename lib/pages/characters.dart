@@ -22,9 +22,6 @@ class _CharactersPageState extends State<CharactersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Characters'),
-      ),
       body: Scrollbar(
         child: Center(
           child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
