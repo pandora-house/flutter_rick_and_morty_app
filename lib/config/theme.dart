@@ -6,7 +6,7 @@ final appTheme = ThemeData(
     cardTheme: CardTheme(
         elevation: 3,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)),
+            borderRadius: BorderRadius.circular(10)),
         shadowColor: Colors.grey[350],
         margin: EdgeInsets.fromLTRB(8, 8, 8, 0)),
     bottomSheetTheme: BottomSheetThemeData(

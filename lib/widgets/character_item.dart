@@ -21,10 +21,11 @@ class CharacterItemWidget extends StatelessWidget {
             SizedBox(
                 height: 110,
                 width: 110,
-                child: ClipRRect(
+                child:
+                ClipRRect(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        bottomLeft: Radius.circular(16)),
+                        topLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(10)),
                     child: Image.network(item.image!))),
             Padding(
               padding: const EdgeInsets.all(8.0),
