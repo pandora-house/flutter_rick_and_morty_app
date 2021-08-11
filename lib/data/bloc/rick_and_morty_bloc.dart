@@ -176,6 +176,11 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       yield LocationError();
     }
   }
+
+  @override
+  Future<void> close() {
+    return super.close();
+  }
 }
 
 Future<List<Character>> _getResidents(
