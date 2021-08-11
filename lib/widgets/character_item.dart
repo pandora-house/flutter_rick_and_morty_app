@@ -53,8 +53,6 @@ class CharacterItemWidget extends StatelessWidget {
                         ),
                         Text(
                           item.status!,
-                          overflow: TextOverflow.clip,
-                          softWrap: false,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         Text(
@@ -70,14 +68,17 @@ class CharacterItemWidget extends StatelessWidget {
                     ),
                     Text(
                       'Last location:',
-                      style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 14),
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption!
+                          .copyWith(fontSize: 14),
                       overflow: TextOverflow.clip,
-                      softWrap: false,
                     ),
                     Text(
                       item.location!.name!,
                       style: Theme.of(context).textTheme.subtitle1,
                       overflow: TextOverflow.clip,
+                      softWrap: false,
                     ),
                   ],
                 ),
