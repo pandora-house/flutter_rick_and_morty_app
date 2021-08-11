@@ -100,25 +100,45 @@ class _PersonageCard extends StatelessWidget {
                                 : Colors.red,
                             shape: BoxShape.circle),
                       ),
-                      Text(item.status!),
-                      Text(' - ${item.species}')
+                      Text(
+                        item.status!,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      Text(
+                        ' - ${item.species}',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      )
                     ],
                   ),
                   SizedBox(
                     height: 8,
                   ),
-                  Text('Origin location:'),
+                  Text(
+                    'Origin location:',
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption!
+                        .copyWith(fontSize: 14),
+                  ),
                   Text(
                     item.origin!.name!,
                     overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(
                     height: 8,
                   ),
-                  Text('Last location:'),
+                  Text(
+                    'Last location:',
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption!
+                        .copyWith(fontSize: 14),
+                  ),
                   Text(
                     item.location!.name!,
                     overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],
               ),
@@ -150,7 +170,11 @@ class _PersonageOption extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
                 child: Row(
                   children: [
-                    Expanded(child: Text(title)),
+                    Expanded(
+                        child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    )),
                     Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.grey,

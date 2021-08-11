@@ -65,8 +65,36 @@ class _LocationsView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text('Type: ${item.type}'),
-                      Text('Dimension: ${item.dimension}'),
+                      Row(
+                        children: [
+                          Text(
+                            'Type: ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(fontSize: 14),
+                          ),
+                          Text(
+                            item.type!,
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Dimension: ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(fontSize: 14),
+                          ),
+                          Text(
+                            item.dimension!,
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -86,7 +114,10 @@ class _LocationsView extends StatelessWidget {
                   name: list[index].name!,
                   onTap: () {
                     Navigator.of(context).pushNamed(PersonageDetail.routeName,
-                        arguments: {'id': list[index].id, 'name': list[index].name});
+                        arguments: {
+                          'id': list[index].id,
+                          'name': list[index].name
+                        });
                   },
                 ),
               ),

@@ -12,8 +12,8 @@ class CharacterItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(PersonageDetail.routeName, arguments: {'id' : item.id!, 'name': item.name});
+        Navigator.of(context).pushNamed(PersonageDetail.routeName,
+            arguments: {'id': item.id!, 'name': item.name});
       },
       child: Card(
         child: Row(
@@ -21,46 +21,66 @@ class CharacterItemWidget extends StatelessWidget {
             SizedBox(
                 height: 110,
                 width: 110,
-                child:
-                ClipRRect(
+                child: ClipRRect(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10)),
                     child: Image.network(item.image!))),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name!,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 8,
-                        width: 8,
-                        margin: const EdgeInsets.only(right: 4),
-                        decoration: BoxDecoration(
-                            color: item.status! == 'Alive'
-                                ? Colors.green
-                                : Colors.red,
-                            shape: BoxShape.circle),
-                      ),
-                      Text(item.status!),
-                      Text(' - ${item.species}')
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Text('Last location:'),
-                  Text(
-                    item.location!.name!,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width - 142,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name!,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 8,
+                          width: 8,
+                          margin: const EdgeInsets.only(right: 4),
+                          decoration: BoxDecoration(
+                              color: item.status! == 'Alive'
+                                  ? Colors.green
+                                  : Colors.red,
+                              shape: BoxShape.circle),
+                        ),
+                        Text(
+                          item.status!,
+                          overflow: TextOverflow.clip,
+                          softWrap: false,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        Text(
+                          ' - ${item.species}',
+                          overflow: TextOverflow.clip,
+                          softWrap: false,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Last location:',
+                      style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 14),
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                    ),
+                    Text(
+                      item.location!.name!,
+                      style: Theme.of(context).textTheme.subtitle1,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ],
+                ),
               ),
             )
           ],
