@@ -13,16 +13,26 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _rickAndMortyBloc = RickAndMortyBloc(repository: Repository());
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RickAndMortyBloc(repository: Repository()),
+      create: (context) => _rickAndMortyBloc,
       child: MaterialApp(
         title: 'Rick and Morty',
         theme: appTheme,
+        initialRoute: '/home',
         onGenerateRoute: (settings) {
-          if (settings.name == PersonageDetail.routeName) {
+          if (settings.name == HomePage.routeName) {
+            return MaterialPageRoute(builder: (context) => HomePage());
+          } else if (settings.name == PersonageDetail.routeName) {
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) {
@@ -51,9 +61,14 @@ class MyApp extends StatelessWidget {
               },
             );
           }
-          return MaterialPageRoute(builder: (context) => HomePage());
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _rickAndMortyBloc.close();
+    super.dispose();
   }
 }
