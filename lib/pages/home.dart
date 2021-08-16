@@ -11,6 +11,8 @@ class HomePage extends StatelessWidget {
   final _screens = <Widget>[CharactersPage(), EpisodesPage(), LocationsPage()];
   final _navBarNotifiers = NavBarNotifier();
 
+  static const routeName = '/home';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
