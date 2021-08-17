@@ -25,51 +25,69 @@ class _LocationsPageState extends State<LocationsPage> {
     return Scaffold(
         body: Scrollbar(
             child: Center(
-          child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
-            listener: (context, state) {
-              if (state is LocationsNewPageError) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Can't load new page"),
-                ));
-              }
-              return;
-            },
-            builder: (context, state) {
-              if (state is LocationsIsLoading) {
-                return CircularProgressIndicator();
-              } else if (state is LocationsFetched) {
-                var list = state.list;
-                _list.addAll(list);
-                return _LocationsView(list: _list);
-              }
-              return _list.isEmpty
-                  ? Text('smt went wrong')
-                  : _LocationsView(list: _list);
-            },
-          ),
-        )));
+      child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
+        listener: (context, state) {
+          if (state is LocationsNewPageError) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Can't load new page"),
+            ));
+          }
+          return;
+        },
+        builder: (context, state) {
+          if (state is LocationsIsLoading) {
+            return CircularProgressIndicator();
+          } else if (state is LocationsFetched) {
+            var list = state.list;
+            _list.addAll(list);
+            return _LocationsView(list: _list);
+          }
+          return _list.isEmpty
+              ? Text('smt went wrong')
+              : _LocationsView(list: _list);
+        },
+      ),
+    )));
   }
 }
 
-class _LocationsView extends StatelessWidget {
+class _LocationsView extends StatefulWidget {
   _LocationsView({Key? key, required this.list}) : super(key: key);
   final List<Locations> list;
 
+  @override
+  __LocationsViewState createState() => __LocationsViewState();
+}
+
+class __LocationsViewState extends State<_LocationsView> {
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset ==
+        _scrollController.position.maxScrollExtent) {
+      context.read<RickAndMortyBloc>().add(LocationsFetchNewPage());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      controller: _scrollController
-        ..addListener(() {
-          if (_scrollController.offset ==
-              _scrollController.position.maxScrollExtent) {
-            context.read<RickAndMortyBloc>().add(LocationsFetchNewPage());
-          }
-        }),
-      itemCount: list.length,
+      controller: _scrollController,
+      itemCount: widget.list.length,
       itemBuilder: (context, int index) =>
-          LocationItemWidget(item: list[index]),
+          LocationItemWidget(item: widget.list[index]),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
   }
 }
