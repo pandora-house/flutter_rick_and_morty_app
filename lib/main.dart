@@ -19,7 +19,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _rickAndMortyBloc = RickAndMortyBloc(repository: Repository());
+  final RickAndMortyBloc _rickAndMortyBloc =
+      RickAndMortyBloc(repository: Repository());
 
   @override
   Widget build(BuildContext context) {
