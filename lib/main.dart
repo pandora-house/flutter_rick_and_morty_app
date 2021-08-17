@@ -1,6 +1,8 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'bloc_observer.dart';
 import 'config/theme.dart';
 import 'data/bloc/rick_and_morty_bloc.dart';
 import 'data/repository.dart';
@@ -10,6 +12,7 @@ import 'pages/location_detail.dart';
 import 'pages/personage_detail.dart';
 
 void main() {
+  Bloc.observer = AppBlocObserver();
   runApp(MyApp());
 }
 
