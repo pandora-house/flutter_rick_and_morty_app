@@ -52,25 +52,43 @@ class _CharactersPageState extends State<CharactersPage> {
   }
 }
 
-class _CharactersView extends StatelessWidget {
+class _CharactersView extends StatefulWidget {
   _CharactersView({Key? key, required this.list}) : super(key: key);
   final List<Character> list;
 
+  @override
+  __CharactersViewState createState() => __CharactersViewState();
+}
+
+class __CharactersViewState extends State<_CharactersView> {
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset ==
+        _scrollController.position.maxScrollExtent) {
+      context.read<RickAndMortyBloc>().add(CharactersFetchNewPage());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      controller: _scrollController
-        ..addListener(() {
-          if (_scrollController.offset ==
-              _scrollController.position.maxScrollExtent) {
-            context.read<RickAndMortyBloc>().add(CharactersFetchNewPage());
-          }
-        }),
-      itemCount: list.length,
+      controller: _scrollController,
+      itemCount: widget.list.length,
       itemBuilder: (context, int index) =>
-          CharacterItemWidget(item: list[index]),
+          CharacterItemWidget(item: widget.list[index]),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
   }
 }
