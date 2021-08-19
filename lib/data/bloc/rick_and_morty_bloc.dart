@@ -55,7 +55,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     yield CharactersIsLoading();
     try {
       final characters =
-          await repository.fetchCharacters(pageCharactersCounter);
+          await repository.fetchCharacters(1);
       yield CharactersFetched(list: characters);
     } on Exception catch (e) {
       yield CharactersError();
@@ -69,6 +69,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
           await repository.fetchCharacters(pageCharactersCounter);
       yield CharactersFetched(list: characters);
     } on Exception catch (e) {
+      pageCharactersCounter = 1;
       yield CharactersNewPageError();
     }
   }
@@ -86,7 +87,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
   Stream<RickAndMortyState> _mapEpisodeFetchFirstPage() async* {
     yield EpisodesIsLoading();
     try {
-      final episodes = await repository.fetchEpisodesPage(pageEpisodesCounter);
+      final episodes = await repository.fetchEpisodesPage(1);
       yield EpisodesFetched(list: episodes);
     } on Exception catch (e) {
       yield EpisodesError();
@@ -99,6 +100,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final episodes = await repository.fetchEpisodesPage(pageEpisodesCounter);
       yield EpisodesFetched(list: episodes);
     } on Exception catch (e) {
+      pageEpisodesCounter = 1;
       yield EpisodesNewPageError();
     }
   }
@@ -107,7 +109,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     yield LocationsIsLoading();
     try {
       final locations =
-          await repository.fetchLocationsPage(pageLocationsCounter);
+          await repository.fetchLocationsPage(1);
       yield LocationsFetched(list: locations);
     } on Exception catch (e) {
       yield LocationsError();
@@ -121,6 +123,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
           await repository.fetchLocationsPage(pageLocationsCounter);
       yield LocationsFetched(list: locations);
     } on Exception catch (e) {
+      pageLocationsCounter = 1;
       yield LocationsNewPageError();
     }
   }
