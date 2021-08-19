@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/character.dart';
 import '../widgets/character_item.dart';
+import '../widgets/preloading_indicator.dart';
 
 class CharactersPage extends StatefulWidget {
   @override
@@ -39,11 +40,15 @@ class _CharactersPageState extends State<CharactersPage> {
               } else if (state is CharactersFetched) {
                 var list = state.list;
                 _list.addAll(list);
-                return _CharactersView(list: _list);
+                return _CharactersView(
+                  list: _list,
+                );
               }
               return _list.isEmpty
                   ? Text('smt went wrong')
-                  : _CharactersView(list: _list);
+                  : _CharactersView(
+                      list: _list,
+                    );
             },
           ),
         ),
@@ -53,7 +58,10 @@ class _CharactersPageState extends State<CharactersPage> {
 }
 
 class _CharactersView extends StatefulWidget {
-  _CharactersView({Key? key, required this.list}) : super(key: key);
+  _CharactersView({
+    Key? key,
+    required this.list,
+  }) : super(key: key);
   final List<Character> list;
 
   @override
@@ -62,6 +70,7 @@ class _CharactersView extends StatefulWidget {
 
 class __CharactersViewState extends State<_CharactersView> {
   final ScrollController _scrollController = ScrollController();
+  bool _showPreload = false;
 
   @override
   void initState() {
@@ -72,17 +81,33 @@ class __CharactersViewState extends State<_CharactersView> {
   void _scrollListener() {
     if (_scrollController.offset ==
         _scrollController.position.maxScrollExtent) {
+      setState(() {
+        _showPreload = true;
+      });
       context.read<RickAndMortyBloc>().add(CharactersFetchNewPage());
     }
   }
 
   @override
+  void didUpdateWidget(covariant _CharactersView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _showPreload = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: widget.list.length,
-      itemBuilder: (context, int index) =>
-          CharacterItemWidget(item: widget.list[index]),
+    return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        ListView.builder(
+          physics: BouncingScrollPhysics(),
+          controller: _scrollController,
+          itemCount: widget.list.length,
+          itemBuilder: (context, int index) =>
+              CharacterItemWidget(item: widget.list[index]),
+        ),
+        _showPreload ? const PreloadingIndicator() : Container()
+      ],
     );
   }
 
