@@ -54,8 +54,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
   Stream<RickAndMortyState> _mapCharactersFetchFirstPage() async* {
     yield CharactersIsLoading();
     try {
-      final characters =
-          await repository.fetchCharacters(1);
+      final characters = await repository.fetchCharacters(1);
       yield CharactersFetched(list: characters);
     } on Exception catch (e) {
       yield CharactersError();
@@ -108,8 +107,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
   Stream<RickAndMortyState> _mapLocationFetchFirstPage() async* {
     yield LocationsIsLoading();
     try {
-      final locations =
-          await repository.fetchLocationsPage(1);
+      final locations = await repository.fetchLocationsPage(1);
       yield LocationsFetched(list: locations);
     } on Exception catch (e) {
       yield LocationsError();
