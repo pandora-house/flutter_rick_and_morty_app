@@ -15,9 +15,12 @@ class EpisodesPage extends StatefulWidget {
 class _EpisodesPageState extends State<EpisodesPage> {
   final List<Episode> _list = [];
 
+  bool isNewPageError = false;
+
   @override
   void initState() {
     super.initState();
+    isNewPageError = false;
     context.read<RickAndMortyBloc>().add(EpisodesFetchFirstPage());
   }
 
@@ -29,6 +32,8 @@ class _EpisodesPageState extends State<EpisodesPage> {
       child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
         listener: (context, state) {
           if (state is EpisodesNewPageError) {
+            isNewPageError = true;
+
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Can't load new page"),
             ));
@@ -40,7 +45,7 @@ class _EpisodesPageState extends State<EpisodesPage> {
             return CircularProgressIndicator();
           } else if (state is EpisodesFetched) {
             var list = state.list;
-            _list.addAll(list);
+            if (!isNewPageError) _list.addAll(list);
             return _EpisodesView(list: _list);
           }
           return _list.isEmpty
@@ -74,6 +79,12 @@ class __EpisodesViewState extends State<_EpisodesView> {
         _scrollController.position.maxScrollExtent) {
       context.read<RickAndMortyBloc>().add(EpisodesFetchNewPage());
     }
+  }
+
+  @override
+  void didUpdateWidget(covariant _EpisodesView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('update');
   }
 
   @override
