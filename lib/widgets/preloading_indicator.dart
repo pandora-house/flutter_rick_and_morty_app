@@ -7,7 +7,7 @@ class PreloadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.all(5),
       child:
           SizedBox(height: 24, width: 24, child: CircularProgressIndicator()),
     );
