@@ -96,18 +96,21 @@ class __CharactersViewState extends State<_CharactersView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        ListView.builder(
-          physics: BouncingScrollPhysics(),
-          controller: _scrollController,
-          itemCount: widget.list.length,
-          itemBuilder: (context, int index) =>
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      controller: _scrollController,
+      itemCount: widget.list.length,
+      itemBuilder: (context, int index) {
+        if (widget.list.length - 1 == index) {
+          return Column(
+            children: [
               CharacterItemWidget(item: widget.list[index]),
-        ),
-        _showPreload ? const PreloadingIndicator() : Container()
-      ],
+              const PreloadingIndicator()
+            ],
+          );
+        }
+        return CharacterItemWidget(item: widget.list[index]);
+      },
     );
   }
 
