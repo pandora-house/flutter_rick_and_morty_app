@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/episode.dart';
 import '../widgets/episode_item.dart';
+import '../widgets/preloading_indicator.dart';
 
 class EpisodesPage extends StatefulWidget {
   @override
@@ -80,8 +81,17 @@ class __EpisodesViewState extends State<_EpisodesView> {
     return ListView.builder(
       controller: _scrollController,
       itemCount: widget.list.length,
-      itemBuilder: (context, int index) =>
-          EpisodeItemWidget(item: widget.list[index]),
+      itemBuilder: (context, int index) {
+        if (widget.list.length - 1 == index) {
+          return Column(
+            children: [
+              EpisodeItemWidget(item: widget.list[index]),
+              const PreloadingIndicator()
+            ],
+          );
+        }
+        return EpisodeItemWidget(item: widget.list[index]);
+      },
     );
   }
 

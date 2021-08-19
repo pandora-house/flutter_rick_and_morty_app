@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/bloc/rick_and_morty_bloc.dart';
 import '../data/models/locations.dart';
 import '../widgets/location_item.dart';
+import '../widgets/preloading_indicator.dart';
 
 class LocationsPage extends StatefulWidget {
   @override
@@ -80,8 +81,17 @@ class __LocationsViewState extends State<_LocationsView> {
     return ListView.builder(
       controller: _scrollController,
       itemCount: widget.list.length,
-      itemBuilder: (context, int index) =>
-          LocationItemWidget(item: widget.list[index]),
+      itemBuilder: (context, int index) {
+        if (widget.list.length - 1 == index) {
+          return Column(
+            children: [
+              LocationItemWidget(item: widget.list[index]),
+              const PreloadingIndicator()
+            ],
+          );
+        }
+        return LocationItemWidget(item: widget.list[index]);
+      },
     );
   }
 

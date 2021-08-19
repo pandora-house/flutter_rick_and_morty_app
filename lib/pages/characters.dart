@@ -70,7 +70,6 @@ class _CharactersView extends StatefulWidget {
 
 class __CharactersViewState extends State<_CharactersView> {
   final ScrollController _scrollController = ScrollController();
-  bool _showPreload = false;
 
   @override
   void initState() {
@@ -81,17 +80,8 @@ class __CharactersViewState extends State<_CharactersView> {
   void _scrollListener() {
     if (_scrollController.offset ==
         _scrollController.position.maxScrollExtent) {
-      setState(() {
-        _showPreload = true;
-      });
       context.read<RickAndMortyBloc>().add(CharactersFetchNewPage());
     }
-  }
-
-  @override
-  void didUpdateWidget(covariant _CharactersView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _showPreload = false;
   }
 
   @override
