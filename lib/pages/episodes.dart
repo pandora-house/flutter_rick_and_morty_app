@@ -15,12 +15,12 @@ class EpisodesPage extends StatefulWidget {
 class _EpisodesPageState extends State<EpisodesPage> {
   final List<Episode> _list = [];
 
-  bool isNewPageError = false;
+  bool newPageError = false;
 
   @override
   void initState() {
     super.initState();
-    isNewPageError = false;
+    newPageError = false;
     context.read<RickAndMortyBloc>().add(EpisodesFetchFirstPage());
   }
 
@@ -32,7 +32,7 @@ class _EpisodesPageState extends State<EpisodesPage> {
       child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
         listener: (context, state) {
           if (state is EpisodesNewPageError) {
-            isNewPageError = true;
+            newPageError = true;
 
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Can't load new page"),
@@ -45,12 +45,12 @@ class _EpisodesPageState extends State<EpisodesPage> {
             return CircularProgressIndicator();
           } else if (state is EpisodesFetched) {
             var list = state.list;
-            if (!isNewPageError) _list.addAll(list);
-            return _EpisodesView(list: _list);
+            if (!newPageError) _list.addAll(list);
+            return _EpisodesView(list: _list, loadError: newPageError,);
           }
           return _list.isEmpty
               ? Text('smt went wrong')
-              : _EpisodesView(list: _list);
+              : _EpisodesView(list: _list, loadError: newPageError,);
         },
       ),
     )));
@@ -58,8 +58,9 @@ class _EpisodesPageState extends State<EpisodesPage> {
 }
 
 class _EpisodesView extends StatefulWidget {
-  _EpisodesView({Key? key, required this.list}) : super(key: key);
+  _EpisodesView({Key? key, required this.list, required this.loadError}) : super(key: key);
   final List<Episode> list;
+  final bool loadError;
 
   @override
   __EpisodesViewState createState() => __EpisodesViewState();
@@ -82,12 +83,6 @@ class __EpisodesViewState extends State<_EpisodesView> {
   }
 
   @override
-  void didUpdateWidget(covariant _EpisodesView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print('update');
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       controller: _scrollController,
@@ -97,7 +92,7 @@ class __EpisodesViewState extends State<_EpisodesView> {
           return Column(
             children: [
               EpisodeItemWidget(item: widget.list[index]),
-              const PreloadingIndicator()
+              !widget.loadError ? const PreloadingIndicator() : Container()
             ],
           );
         }

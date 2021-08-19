@@ -15,9 +15,12 @@ class LocationsPage extends StatefulWidget {
 class _LocationsPageState extends State<LocationsPage> {
   final List<Locations> _list = [];
 
+  bool newPageError = false;
+
   @override
   void initState() {
     super.initState();
+    newPageError = false;
     context.read<RickAndMortyBloc>().add(LocationsFetchFirstPage());
   }
 
@@ -29,6 +32,8 @@ class _LocationsPageState extends State<LocationsPage> {
       child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
         listener: (context, state) {
           if (state is LocationsNewPageError) {
+            newPageError = true;
+
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Can't load new page"),
             ));
@@ -40,12 +45,12 @@ class _LocationsPageState extends State<LocationsPage> {
             return CircularProgressIndicator();
           } else if (state is LocationsFetched) {
             var list = state.list;
-            _list.addAll(list);
-            return _LocationsView(list: _list);
+            if (!newPageError) _list.addAll(list);
+            return _LocationsView(list: _list, loadError: newPageError,);
           }
           return _list.isEmpty
               ? Text('smt went wrong')
-              : _LocationsView(list: _list);
+              : _LocationsView(list: _list, loadError: newPageError,);
         },
       ),
     )));
@@ -53,8 +58,9 @@ class _LocationsPageState extends State<LocationsPage> {
 }
 
 class _LocationsView extends StatefulWidget {
-  _LocationsView({Key? key, required this.list}) : super(key: key);
+  _LocationsView({Key? key, required this.list, required this.loadError}) : super(key: key);
   final List<Locations> list;
+  final bool loadError;
 
   @override
   __LocationsViewState createState() => __LocationsViewState();
@@ -86,7 +92,7 @@ class __LocationsViewState extends State<_LocationsView> {
           return Column(
             children: [
               LocationItemWidget(item: widget.list[index]),
-              const PreloadingIndicator()
+              !widget.loadError ? const PreloadingIndicator() : Container()
             ],
           );
         }

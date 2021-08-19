@@ -14,9 +14,12 @@ class CharactersPage extends StatefulWidget {
 class _CharactersPageState extends State<CharactersPage> {
   final List<Character> _list = [];
 
+  bool newPageError = false;
+
   @override
   void initState() {
     super.initState();
+    newPageError = false;
     context.read<RickAndMortyBloc>().add(CharactersFetchFirstPage());
   }
 
@@ -28,6 +31,8 @@ class _CharactersPageState extends State<CharactersPage> {
           child: BlocConsumer<RickAndMortyBloc, RickAndMortyState>(
             listener: (context, state) {
               if (state is CharactersNewPageError) {
+                newPageError = true;
+
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text("Can't load new page"),
                 ));
@@ -39,15 +44,17 @@ class _CharactersPageState extends State<CharactersPage> {
                 return CircularProgressIndicator();
               } else if (state is CharactersFetched) {
                 var list = state.list;
-                _list.addAll(list);
+                if (!newPageError) _list.addAll(list);
                 return _CharactersView(
                   list: _list,
+                  loadError: newPageError,
                 );
               }
               return _list.isEmpty
                   ? Text('smt went wrong')
                   : _CharactersView(
                       list: _list,
+                      loadError: newPageError,
                     );
             },
           ),
@@ -58,11 +65,10 @@ class _CharactersPageState extends State<CharactersPage> {
 }
 
 class _CharactersView extends StatefulWidget {
-  _CharactersView({
-    Key? key,
-    required this.list,
-  }) : super(key: key);
+  _CharactersView({Key? key, required this.list, required this.loadError})
+      : super(key: key);
   final List<Character> list;
+  final bool loadError;
 
   @override
   __CharactersViewState createState() => __CharactersViewState();
@@ -95,7 +101,7 @@ class __CharactersViewState extends State<_CharactersView> {
           return Column(
             children: [
               CharacterItemWidget(item: widget.list[index]),
-              const PreloadingIndicator()
+              !widget.loadError ? const PreloadingIndicator() : Container()
             ],
           );
         }
