@@ -56,7 +56,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     try {
       final characters = await repository.fetchCharacters(1);
       yield CharactersFetched(list: characters);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield CharactersError();
     }
   }
@@ -67,7 +67,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final characters =
           await repository.fetchCharacters(pageCharactersCounter);
       yield CharactersFetched(list: characters);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       pageCharactersCounter = 1;
       yield CharactersNewPageError();
     }
@@ -78,7 +78,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     try {
       final personage = await repository.fetchPersonageById(event.id);
       yield PersonageFetched(personage: personage);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield PersonageError();
     }
   }
@@ -88,7 +88,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     try {
       final episodes = await repository.fetchEpisodesPage(1);
       yield EpisodesFetched(list: episodes);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield EpisodesError();
     }
   }
@@ -98,7 +98,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     try {
       final episodes = await repository.fetchEpisodesPage(pageEpisodesCounter);
       yield EpisodesFetched(list: episodes);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       pageEpisodesCounter = 1;
       yield EpisodesNewPageError();
     }
@@ -109,7 +109,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
     try {
       final locations = await repository.fetchLocationsPage(1);
       yield LocationsFetched(list: locations);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield LocationsError();
     }
   }
@@ -120,7 +120,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final locations =
           await repository.fetchLocationsPage(pageLocationsCounter);
       yield LocationsFetched(list: locations);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       pageLocationsCounter = 1;
       yield LocationsNewPageError();
     }
@@ -134,7 +134,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final characters = await _getCharacters(episode, repository);
 
       yield EpisodeFetched(item: episode, characters: characters);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield EpisodeError();
     }
   }
@@ -147,7 +147,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final characters = await _getCharacters(episode, repository);
 
       yield EpisodeFetched(item: episode, characters: characters);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield EpisodeError();
     }
   }
@@ -160,7 +160,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final residents = await _getResidents(location, repository);
 
       yield LocationFetched(item: location, residents: residents);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield LocationError();
     }
   }
@@ -173,7 +173,7 @@ class RickAndMortyBloc extends Bloc<RickAndMortyEvent, RickAndMortyState> {
       final residents = await _getResidents(location, repository);
 
       yield LocationFetched(item: location, residents: residents);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield LocationError();
     }
   }
