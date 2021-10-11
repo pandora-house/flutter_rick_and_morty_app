@@ -1,68 +1,121 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 
+import 'errors.dart';
+
 class RickAndMortyApi {
-  String url = 'https://rickandmortyapi.com/api/';
+  static const _url = 'https://rickandmortyapi.com/api/';
 
   Future<String> fetchCharacters(int page) async {
-    final response = await http.get(Uri.parse('${url}character/?page=$page'));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load characters');
+    var response;
+    try {
+      response = await http.get(Uri.parse('${_url}character/?page=$page'));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 
   Future<String> fetchPersonage(int id) async {
-    final response = await http.get(Uri.parse('${url}character/$id'));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load personage');
+    var response;
+    try {
+      response = await http.get(Uri.parse('${_url}character/$id'));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 
   Future<String> fetchEpisodesPage(int page) async {
-    final response = await http.get(Uri.parse('${url}episode?page=$page'));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load episodes');
+    var response;
+    try {
+      response = await http.get(Uri.parse('${_url}episode?page=$page'));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 
   Future<String> fetchLocationsPage(int page) async {
-    final response = await http.get(Uri.parse('${url}location?page=$page'));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load locations');
+    var response;
+    try {
+      response = await http.get(Uri.parse('${_url}location?page=$page'));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 
   Future<String> fetchDataByUrl(String url) async {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load');
+    var response;
+    try {
+      response = await http.get(Uri.parse(url));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 
   Future<String> fetchEpisode(int id) async {
-    final response = await http.get(Uri.parse('${url}episode/$id'));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load episode');
+    var response;
+    try {
+      response = await http.get(Uri.parse('${_url}episode/$id'));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 
   Future<String> fetchLocation(int id) async {
-    final response = await http.get(Uri.parse('${url}location/$id'));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load location');
+    var response;
+    try {
+      response = await http.get(Uri.parse('${_url}location/$id'));
+    } on SocketException {
+      throw NoInternetException();
+    } on HttpException {
+      throw NoServiceFoundException();
     }
+
+    if (response.statusCode != 200)
+      throw StatusException(message: response.statusCode);
+
+    return response.body;
   }
 }
