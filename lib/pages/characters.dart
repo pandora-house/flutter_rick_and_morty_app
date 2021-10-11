@@ -51,7 +51,7 @@ class _CharactersPageState extends State<CharactersPage> {
                 );
               }
               return _list.isEmpty
-                  ? Text('smt went wrong')
+                  ? SizedBox.shrink()
                   : _CharactersView(
                       list: _list,
                       loadError: newPageError,

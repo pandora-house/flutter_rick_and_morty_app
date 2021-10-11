@@ -49,7 +49,7 @@ class _LocationsPageState extends State<LocationsPage> {
             return _LocationsView(list: _list, loadError: newPageError,);
           }
           return _list.isEmpty
-              ? Text('smt went wrong')
+              ? SizedBox.shrink()
               : _LocationsView(list: _list, loadError: newPageError,);
         },
       ),

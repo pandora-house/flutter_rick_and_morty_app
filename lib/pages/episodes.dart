@@ -49,7 +49,7 @@ class _EpisodesPageState extends State<EpisodesPage> {
             return _EpisodesView(list: _list, loadError: newPageError,);
           }
           return _list.isEmpty
-              ? Text('smt went wrong')
+              ? SizedBox.shrink()
               : _EpisodesView(list: _list, loadError: newPageError,);
         },
       ),
